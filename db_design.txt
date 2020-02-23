@@ -1,0 +1,18 @@
+CREATE TABLE users (userid INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL DEFAULT (null) ,userrole Integer,password text);
+CREATE TABLE roles (roleid INTEGER PRIMARY KEY AUTOINCREMENT, rolename TEXT NOT NULL DEFAULT (null));
+CREATE TABLE menus (menuid INTEGER PRIMARY KEY AUTOINCREMENT, menuname TEXT NOT NULL DEFAULT (null) ,parentmenu integer, menuorder INTEGER);
+CREATE TABLE rolemappings (mappingid INTEGER PRIMARY KEY AUTOINCREMENT, roleid INTEGER, menuid INTEGER);
+
+insert into roles(rolename) values('admin');
+insert into roles(rolename) values('support');
+insert into roles(rolename) values('sales');
+
+insert into users(username,userrole,password) values ('admin',1,'63c9c7ffffcae785a032832c03cf0c79da5d5789b6a152aa49751b65');
+
+insert into menus (menuname,menuorder) values ("supportmenu",1);
+insert into menus (menuname,menuorder) values ("salesmenu",2);
+insert into menus (menuname,parentmenu,menuorder) values ("supportsubmenu1",1,1);
+insert into menus (menuname,parentmenu,menuorder) values ("supportsubmenu2",1,2);
+insert into menus (menuname,parentmenu,menuorder) values ("salessubmenu1",2,1);
+insert into menus (menuname,parentmenu,menuorder) values ("salessubmenu2",2,2);
+

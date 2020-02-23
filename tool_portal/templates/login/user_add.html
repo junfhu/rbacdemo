@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-xl-9 " xmlns:back-ground="http://www.w3.org/1999/xhtml">
+
+        {% if get_flashed_messages() %}
+        <div class="alert alert-danger" role="alert">
+            Error: {{ get_flashed_messages()[0] }}
+        </div>
+        {% endif %}
+        <h4 class="card p-3">ADD New User</h4>
+        <form class="card p-3 mb-5" action="{{ url_for('login.add_new_user')}}" id="add_new_user"
+              method="post">
+
+
+            <div class="row form-group">
+                <div class="mb-3 col-xl-3 form-group">
+                <input type="text" class="form-control" id="username" name="username" placeholder="username"
+                       value=""
+                       required>
+                </div>
+                <div class="mb-3 col-xl-3 form-group">
+                <input type="password" class="form-control" id="password" name="password" placeholder="password"
+                       value=""
+                       required>
+                </div>
+                <div class="mb-3 col-xl-3 form-group">
+                <select id="userrole" name="userrole">
+                                    {%for userrole in userroles%}
+                                    <option value="{{userrole.roleid}}">{{userrole.rolename}}
+                                    </option>
+                                    {%endfor%}
+
+                                </select>
+                </div>
+                <div class="mb-3 form-group" align="right">
+                <button class="btn btn-primary" id="btnSaveIssue" type="submit">Save</button>
+            </div>
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+        </form>
+
+
+    </div>
+
+
+    <p></p>
+
+
+</div>
+
+
+
+{% endblock %}

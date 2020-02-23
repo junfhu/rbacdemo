@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-xl-9">
+        <div class="mb-3 form-group">
+            <div id="rolelist">
+                {%if roles|length==0%}
+                <table class="table">
+                    <tr>
+                        <td width="100%">No User Role Defined</td>
+                    </tr>
+                </table>
+                {%else%}
+                <table class="table">
+                    <tr>
+                        <td width="10%">Role Name</td>
+                        <td width="20%">Edit</td>
+                    </tr>
+                </table>
+                <table class="table">
+                    {% for role in roles %}
+                            <tr>
+                                <td width="10%">{{role.rolename}}</td>
+                                <td width="20%"><a href="{{url_for('login.edit_role',roleid=role.roleid)}}">
+                                    <button class="btn btn-primary btn-edit" type="button" id="btnEditRole">Edit</button></a>
+
+
+                                </td>
+
+                            </tr>
+
+                    {% endfor %}
+                    </table>
+                {%endif%}
+            </div>
+            <a class="btn btn-primary" href="{{url_for('login.add_new_role')}}">Add
+            New
+            Role</a>&nbsp;
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="row">
+    <div class="w3-example col-xl-9" xmlns:back-ground="http://www.w3.org/1999/xhtml">
+        <table width=100% class="w3-banner w3-table w3-margin-top" align=center>
+            <tr>
+                <td>Role Details</td>
+            </tr>
+        </table>
+        <form class="card p-3 mb-5" action="{{ url_for('login.role_edit')}}" method="post" id="roleEdit"
+              name="roleAdd">
+            <div class="mb-3">
+                <div>
+                    <label class="form-inline">Role Name: {{roleinfo.rolename}} </label>
+                    <input type="hidden" name="roleid" value="{{roleinfo.roleid}}">
+                </div>
+            </div>
+
+            {% for menu in menus %}
+            <div class="mb-3">
+
+                {%if not menu.parentmenu%}
+                    {%set mybool = [False]%}
+                    {%for mapping in mappings%}
+                        {%if menu.menuid==mapping.menuid %}
+                        {%set _ = mybool.append(not mybool.pop())%}
+                        {%endif%}
+                    {%endfor%}
+
+                    {%if mybool[0] %}
+                    <input type="checkbox" name="rolemenu" value="{{menu.menuid}}" checked>{{menu.menuname}}<br>
+                    {%else%}
+                    <input type="checkbox" name="rolemenu" value="{{menu.menuid}}">{{menu.menuname}}<br>
+                    {%endif%}
+                    {%set parent_menu_id=menu.menuid%}
+                    {% for menu in menus %}
+                        {%if menu.parentmenu|int==parent_menu_id%}
+                            {%set mybool = [False]%}
+                            {%for mapping in mappings%}
+                                {%if menu.menuid==mapping.menuid %}
+                                {%set _ = mybool.append(not mybool.pop())%}
+                                {%endif%}
+                            {%endfor%}
+                            {%if mybool[0] %}
+                            &emsp;<input type="checkbox" name="rolemenu" value="{{menu.menuid}}" checked>{{menu.menuname}}<br>
+                            {%else%}
+                            &emsp;<input type="checkbox" name="rolemenu" value="{{menu.menuid}}">{{menu.menuname}}<br>
+                            {%endif%}
+                        {%endif%}
+                    {%endfor%}
+                {%endif%}
+            </div>
+            {%endfor%}
+            <div align="right">
+                <button class="btn btn-primary btn-save" type="submit" id="btnSaveRole">Save</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock %}

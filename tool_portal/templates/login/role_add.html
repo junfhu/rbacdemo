@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="row">
+    <div class="w3-example col-xl-9" xmlns:back-ground="http://www.w3.org/1999/xhtml">
+        <table width=100% class="w3-banner w3-table w3-margin-top" align=center>
+            <tr>
+                <td>Role Details</td>
+            </tr>
+        </table>
+        <form class="card p-3 mb-5" action="{{ url_for('login.role_add')}}" method="post" id="roleAdd"
+              name="roleAdd">
+            <div class="mb-3">
+                <div>
+                    <label for="rolename" class="form-inline">Role Name: <input type="text" class="form-control" id="rolename" name="rolename" required></label>
+                </div>
+            </div>
+            {% for menu in menus %}
+            <div class="mb-3">
+                {%if not menu.parentmenu%}
+                <input type="checkbox" name="rolemenu" value="{{menu.menuid}}">{{menu.menuname}}<br>
+                    {%set parent_menu_id=menu.menuid%}
+                    {% for menu in menus %}
+                    {%if menu.parentmenu|int==parent_menu_id%}
+                    &emsp;<input type="checkbox" name="rolemenu" value="{{menu.menuid}}">{{menu.menuname}}<br>
+                    {%endif%}
+                    {%endfor%}
+                {%endif%}
+            </div>
+            {%endfor%}
+            <div align="right">
+                <button class="btn btn-primary btn-save" type="submit" id="btnSaveRole">Save</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock %}

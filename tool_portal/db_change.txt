@@ -1,0 +1,51 @@
+update menus set menu_name='PSFlowList' where menu_id=17;
+update menus set menu_name='PSMsgDesc' where menu_id=18;
+update menus set menu_name='PSMsgDecode' where menu_id=19; 
+update menus set menu_name='SyncXIOKnownIssueDB' where menu_id=23;
+update menus set menu_name='SyncPSKnownIssueDB' where menu_id=24;
+update menus set menu_name='SyncXIOFlowDB' where menu_id=25;
+update menus set menu_name='SyncPSFlowDB' where menu_id=26;
+update menus set menu_name='XIOFlowExec' where menu_id=27;
+update menus set menu_name='XIOFlowList' where menu_id=12;
+update menus set menu_name='XIOMsgDesc' where menu_id=13;
+update menus set menu_name='XIOMsgDecode' where menu_id=14;
+update menus set menu_name='XtremIOKnownIssue' where menu_id=1;
+update menus set menu_name='PowerStoreKnownIssue' where menu_id=2;
+update menus set Parent_Menu='XtremIOKnownIssue' where Parent_Menu='XtremIO';
+update menus set Parent_Menu='PowerStoreKnownIssue' where Parent_Menu='PowerStore';
+update menus set menu_order=menu_order*10;
+update menus set menu_order=35 where menu_id=28;
+update menus set menu_order=35 where menu_id=27;
+#2/16
+ALTER TABLE USERS ADD XIOVMIP TEXT;
+ALTER TABLE USERS ADD XIOVMUSER TEXT;
+ALTER TABLE USERS ADD XIOVMPASSWD TEXT;
+ALTER TABLE USERS ADD XIOVMWORKDIR TEXT;
+ALTER TABLE USERS ADD localdevvm TEXT;
+ALTER TABLE USERS ADD localxiovm TEXT;
+update users set password='UGFzc3dvcmQxMjMh' where userid=27;
+update menus set parent_menu='1' where parent_menu='XtremIOKnownIssue';
+update menus set parent_menu='2' where parent_menu='PowerStoreKnownIssue';
+update menus set parent_menu='11' where parent_menu='XtremIOFlow';
+update menus set parent_menu='16' where parent_menu='PowerStoreFlow';
+update menus set Menu_Order=25 where menu_id=28;
+insert into menus (Menu_name,Parent_menu,menu_order) values('SEP','1',29);
+insert into menus (Menu_name,Parent_menu,menu_order) values('SEP','1',49);
+insert into menus (Menu_name,Parent_menu,menu_order) values('SEP','1',69);
+insert into menus (Menu_name,Parent_menu,menu_order) values('SEP','2',29);
+insert into menus (Menu_name,Parent_menu,menu_order) values('SEP','2',39);
+insert into menus (Menu_name,Parent_menu,menu_order) values('SEP','11',34);
+insert into menus (Menu_name,Parent_menu,menu_order) values('SEP','11',39);
+insert into menus (Menu_name,Parent_menu,menu_order) values('SEP','16',39);
+
+
+
+insert into menus (Menu_name,Parent_menu,menu_order) values('SEP','2',33);
+insert into menus (Menu_name,Parent_menu,menu_order,Menu_Hyperlink) values('RootTokenGen','2',34,'https://hubv1.corp.emc.com/services/service_key_generator');
+
+
+
+
+
+
+

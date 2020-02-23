@@ -1,0 +1,148 @@
+{% block doc -%}
+<!DOCTYPE html>
+<html class="h-100">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Web Portal</title>
+
+    <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+    <style>
+
+main > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.footer {
+  background-color: #f5f5f5;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+code {
+  font-size: 80%;
+}
+ .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 1200px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+
+      }
+      .table-bordered td {
+      padding:8px 8px;display:table-cell;
+      }
+
+.classdiv {
+    width: initial;
+    display: inline-block;
+    margin: 45px 20px;
+    padding: 10px;
+    background: grey;
+}
+.container {
+max-width:1520px
+}
+.collapse-small{
+font-family:monospace;
+font-size: 13px;
+}
+
+
+    </style>
+
+    {% block scripts %}
+    <script src="{{url_for('static', filename='js/jquery-3.4.1.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    {%- endblock scripts %}
+
+</head>
+<body class="d-flex flex-column h-100 w-100 bg-light" style="background-color: #f5f5f5;">
+{%if session['username']%}
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    {{session['username']}}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{url_for('login.usermanagement')}}">User Management</a>
+                    <a class="dropdown-item" href="{{url_for('login.rolemanagement')}}">Role Management</a>
+                    <a class="dropdown-item" href="{{url_for('login.passwordmanagement')}}">Password Management</a>
+                    <a class="dropdown-item" href="{{url_for('login.logout')}}">Logout</a>
+                </div>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="{{url_for('login.success')}}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <!--Here are the menus for different users-->
+            {%for parentmenu in session['menus']%}
+            {%if not parentmenu[2]%}
+            {%if parentmenu[0] in session['mapping_menus']%}
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownParent" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    {{parentmenu[1]}}
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {%for submenu in session['menus']%}
+                    {%if submenu[2]|int==parentmenu[0]%}
+                    {%if submenu[0] in session['mapping_menus']%}
+                    <a class="dropdown-item" href="{{submenu[3]}}">{{submenu[1]}}</a>
+                    {%endif%}
+                    {%endif%}
+                    {%endfor%}
+                </div>
+            </li>
+            {%endif%}
+            {%endif%}
+            {%endfor%}
+        </ul>
+    </div>
+</nav>
+<main role="main" class="flex-shrink-0">
+    <div class="container">
+        {% block content%}
+        {% endblock content %}
+    </div>
+</main>
+
+<footer class="footer mt-auto py-3">
+    <div class="container" align="center">
+        <span class="text-muted">Please contact <a href="mailto:junfhu@163.com"> Junfeng Hu </a>in case of any issues!</span>
+    </div>
+</footer>
+
+{%else%}
+
+<meta http-equiv="refresh"
+      content="0; url={{ url_for('login.login')}}">
+{% endif %}
+
+</body>
+</html>
+{% endblock doc -%}
+
+

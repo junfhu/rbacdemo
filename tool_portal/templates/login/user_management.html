@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-xl-12">
+        <div class="mb-3 form-group">
+            <div class="mb-3"><a class="btn btn-primary" href="{{ url_for('login.add_new_user')}}">Add
+            New User</a>&nbsp;</div>
+            <div id="userslist">
+                <table class="table">
+                    <tr>
+                        <td width="10%">Username</td>
+                        <td width="10%">User Role</td>
+                        <td width="20%" align="left">Edit</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </table>
+
+
+                {% for user in users %}
+                <form action="{{ url_for('login.usermanagement')}}" method="post" id="form{{user.userid}}">
+                    <table class="table">
+                        <tr>
+                            <input type="hidden" name="userid" value="{{user.userid}}"/>
+                            <td width="10%">{{user.username}}</td>
+                            <td width="10%">
+                                <select disabled="disabled" id="userrole" name="userrole">
+                                    {%for userrole in userroles%}
+                                    <option value="{{userrole.roleid}}" {%if user.userrole==userrole.roleid%} selected {%endif%}>{{userrole.rolename}}
+                                    </option>
+                                    {%endfor%}
+
+                                </select>
+                            </td>
+                            <td width="20%">
+                                <button class="btn btn-primary btn-edit" type="button" id="btnEditUser">Edit</button>
+                                <a class="btn btn-primary" id="btnDelUser"
+                           href="{{ url_for('login.delete_user',userid=user.userid) }}"
+                           style="color: white"
+                           onclick="{if(confirm('Are you sure?')){this.document.formname.submit();return true;}return false;}">Delete</a>
+                                <button class="btn btn-primary d-none btn-save" type="button" id="btnSaveUser">Save
+                                </button>
+
+                            </td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$('#userslist .btn-edit').on('click',function(){
+    var form_id =  $(this).closest('form').attr("id");
+    $('#'+form_id+' #userrole').attr("disabled", false);
+    $('#'+form_id+' #btnSaveUser').removeClass("d-none");
+    $('#'+form_id+' #btnEditUser').addClass("d-none");
+});
+
+$('#userslist .btn-save').on('click',function(){
+    $(this).closest('form').submit();
+});
+
+
+</script>
+{% endblock %}
+
